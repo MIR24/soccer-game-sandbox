@@ -7,24 +7,28 @@ public class SoccerPlayer : MonoBehaviour {
 
     public int kickPower = 100;
     public float moveSpeed = 0;
+    public float moveDirection = 0;
 
     private bool controllingBall;
     private Vector3 dribblingDirection;
     private SoccerWorld world;
     private Animator anim;
     private int moveSpeedHash;
+    private int moveDirectionHash;
     
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animator>();
         moveSpeedHash = Animator.StringToHash("Speed");
+        moveDirectionHash = Animator.StringToHash("Direction");
         world = GameObject.FindGameObjectWithTag("World").GetComponent<SoccerWorld>();
         MessageDispatcher.AddListener("ball_controlled_by", this.gameObject.name, takeBallControl, true);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        anim.SetFloat(moveSpeedHash, moveSpeed);    
+        anim.SetFloat(moveSpeedHash, moveSpeed);
+        anim.SetFloat(moveDirectionHash, moveDirection);
 	}
 
     void takeBallControl(IMessage rMessage) {

@@ -920,6 +920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kickPower: 100
   moveSpeed: 0
+  moveDirection: 0
 --- !u!4 &537546896 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4415593184391024, guid: 21528534c02f8e0408e92132f35c1c07,
@@ -2773,7 +2774,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_LookAt: {fileID: 537546896}
-  m_Follow: {fileID: 0}
+  m_Follow: {fileID: 537546896}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
