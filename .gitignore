@@ -6,6 +6,15 @@
 
 /Assets/AssetStoreTools*
 
+# 3d part libraries
+/Assets/Cinemachine*
+/Assets/Gizmos*
+/Assets/SchoolGymPack*
+/Assets/Plugins/RootMotion*
+/Assets/Plugins/Github*
+/Assets/ootii*
+/Assets/Sport Balls Pack*
+
 # Visual Studio 2015 cache directory
 /.vs/
 
