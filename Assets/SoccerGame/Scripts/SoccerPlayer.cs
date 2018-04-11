@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using com.ootii.Messages;
+using RootMotion.FinalIK;
 
 public class SoccerPlayer : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class SoccerPlayer : MonoBehaviour {
     public float moveSpeed = 0;
     public float moveDirection = 0;
     public bool abruptStop = false;
+    public GameObject myTarget;
 
     private bool controllingBall;
     private Vector3 dribblingDirection;
@@ -31,6 +33,12 @@ public class SoccerPlayer : MonoBehaviour {
 
         //Setup Listeners
         MessageDispatcher.AddListener("ball_controlled_by", this.gameObject.name, takeBallControl, true);
+
+        //Initial setup player target
+        if (myTarget) {
+            LookAtIK myLookTarget = GetComponent<LookAtIK>();
+            myLookTarget.solver.target = myTarget.transform;
+        }
     }
 	
 	// Update is called once per frame
@@ -38,7 +46,10 @@ public class SoccerPlayer : MonoBehaviour {
         //Manage Animator States
         anim.SetFloat(moveSpeedHash, moveSpeed);
         anim.SetFloat(moveDirectionHash, moveDirection);
-        if (abruptStop && !anim.GetBool(abruptStopHash)) anim.SetBool(abruptStopHash, true);
+        if (abruptStop && !anim.GetBool(abruptStopHash))
+        {
+            anim.SetBool(abruptStopHash, true);
+        }
         if (!abruptStop && anim.GetBool(abruptStopHash)) anim.SetBool(abruptStopHash, false);
 	}
 
