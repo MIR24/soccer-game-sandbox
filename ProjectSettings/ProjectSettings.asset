@@ -550,6 +550,8 @@ PlayerSettings:
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
     1: OOTII_MD
+    4: OOTII_MD
+    7: OOTII_MD
   platformArchitecture: {}
   scriptingBackend: {}
   incrementalIl2cppBuild: {}
