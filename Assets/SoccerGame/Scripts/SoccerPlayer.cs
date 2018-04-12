@@ -14,11 +14,8 @@ public class SoccerPlayer : MonoBehaviour {
     public GameObject myTarget;
     public Vector3 myTargetDirection;
     public float myTargetDirectionAngle;
-    public float myTargetDirectionAngleCorrected;
     public float maxFieldOfView = 200F;
     public float visionAngle = 30F;
-    public float forwardAngleCorrection = 90F;
-    public float turnToRightAngle;
     public bool turnToLeft;
     public bool turnToRight;
 
