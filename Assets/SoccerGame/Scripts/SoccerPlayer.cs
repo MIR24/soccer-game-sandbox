@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using com.ootii.Messages;
 using RootMotion.FinalIK;
 
@@ -19,16 +21,13 @@ public class SoccerPlayer : MonoBehaviour {
 
     //Motion states params & flags
     public float moveSpeed = 0;
-    public float moveDirection = 0;
+    public float moveDirectionAngle = 0;
     public bool abruptStop = false;
-    public bool turnToTarget = false;
-    public bool followTarget = false;
-    public bool turnToLeft = false;
-    public bool turnToRight = false;
 
     //Animator cached parameters
     private int moveSpeedHash;
     private int moveDirectionHash;
+    private int targetDistanceHash;
     private int abruptStopHash;
     private int turnLeftInPlaceHash;
     private int turnRightInPlaceHash;
@@ -36,6 +35,7 @@ public class SoccerPlayer : MonoBehaviour {
     
     //Other params & options
     public float targetDirectionAngle;
+    public float targetDistance;
     private bool controllingBall;
     private Vector3 dribblingDirection;
     public float moveDirectionDeviation = 5F; //Move direction acceptable deviation
@@ -49,6 +49,7 @@ public class SoccerPlayer : MonoBehaviour {
         //Cache Animator Parameters
         moveSpeedHash = Animator.StringToHash("Speed");
         moveDirectionHash = Animator.StringToHash("MoveDirection");
+        targetDistanceHash = Animator.StringToHash("TargetDistance");
         abruptStopHash = Animator.StringToHash("AbruptStop");
         turnLeftInPlaceHash = Animator.StringToHash("TurnLeftInPlace");
         turnRightInPlaceHash = Animator.StringToHash("TurnRightInPlace");
@@ -67,9 +68,13 @@ public class SoccerPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //Setup move direction (move direction and target direction are not the same, but sometime this happens)
+        moveDirectionAngle = targetDirectionAngle;
+
         //Setup movement speed and direction
         anim.SetFloat(moveSpeedHash, moveSpeed);
-        anim.SetFloat(moveDirectionHash, moveDirection);
+        anim.SetFloat(moveDirectionHash, moveDirectionAngle);
+        anim.SetFloat(targetDistanceHash, targetDistance);
         
         //Flush animation flags
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Left_turn_in_place") && anim.GetBool(turnLeftInPlaceHash)) {
@@ -87,9 +92,10 @@ public class SoccerPlayer : MonoBehaviour {
         }
         if (!abruptStop && anim.GetBool(abruptStopHash)) anim.SetBool(abruptStopHash, false);
 
-        //Calculate target heading angle
+        //Calculate target heading angle and distance
         targetDirection = myTarget.transform.position - transform.position;
         targetDirectionAngle = Vector3.SignedAngle(targetDirection, transform.forward, Vector3.up);
+        targetDistance = Vector3.Distance(myTarget.transform.position, transform.position);
 
         //Check if should turn left
         if (targetDirectionAngle > headingAngle / 2 + visionAngle && !anim.GetBool(turnLeftInPlaceHash)) {
@@ -103,6 +109,8 @@ public class SoccerPlayer : MonoBehaviour {
         }
 
         Debug.Log("Do I turning in place left" + anim.GetCurrentAnimatorStateInfo(0).IsName("Left_turn_in_place"));
+        DebugPanel.Log("Target Distance ", targetDistance);
+        DebugPanel.Log("Target Direction Angle ", targetDirectionAngle);
 	}
 
     void takeBallControl(IMessage rMessage) {
