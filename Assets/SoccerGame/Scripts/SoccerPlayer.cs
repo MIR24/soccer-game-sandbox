@@ -99,16 +99,13 @@ public class SoccerPlayer : MonoBehaviour {
 
         //Check if should turn left
         if (targetDirectionAngle > headingAngle / 2 + visionAngle && !anim.GetBool(turnLeftInPlaceHash)) {
-            Debug.Log("Have to turn left");
             anim.SetBool(turnLeftInPlaceHash, true);
         }
         //Check if should turn right
         if (targetDirectionAngle < -headingAngle / 2 - visionAngle && !anim.GetBool(turnRightInPlaceHash)) {
-            Debug.Log("Have to turn right");
             anim.SetBool(turnRightInPlaceHash, true);
         }
 
-        Debug.Log("Do I turning in place left" + anim.GetCurrentAnimatorStateInfo(0).IsName("Left_turn_in_place"));
         DebugPanel.Log("Target Distance ", targetDistance);
         DebugPanel.Log("Target Direction Angle ", targetDirectionAngle);
 	}
@@ -116,11 +113,9 @@ public class SoccerPlayer : MonoBehaviour {
     void takeBallControl(IMessage rMessage) {
         dribblingDirection = Vector3.Normalize(world.ball.transform.position - transform.position);
         controllingBall = true;
-        Debug.Log("Start dribbling");
     }
 
     void kickTheBall() {
-        Debug.Log(this.gameObject.name + " kicks the ball");
         SoccerBallLogic soccerBallLogic = world.ball.GetComponent<SoccerBallLogic>();
         soccerBallLogic.setControllable(false, null);
         soccerBallLogic.kick(dribblingDirection, kickPower);
