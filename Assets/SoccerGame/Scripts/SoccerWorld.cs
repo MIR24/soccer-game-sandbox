@@ -7,6 +7,10 @@ public class SoccerWorld : MonoBehaviour
 
     public float timeScale = 1f;
     public GameObject ball;
+    public GameObject playableChar;
+
+    //Midpoint beetwen ball and controllable char to point camera
+    public GameObject spectateMediane;
 
     // Use this for initialization
     void Start()
@@ -18,5 +22,13 @@ public class SoccerWorld : MonoBehaviour
     void Update()
     {
         Time.timeScale = timeScale;
+        spectateMediane.transform.position = (playableChar.transform.position + ball.transform.position) / 2;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(spectateMediane.transform.position, 0.1F);
+    }
+
 }

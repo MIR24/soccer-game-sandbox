@@ -71,6 +71,18 @@ public class SoccerPlayer : MonoBehaviour {
         //Setup move direction (move direction and target direction are not the same, but sometime this happens)
         moveDirectionAngle = targetDirectionAngle;
 
+        //Adjust move direction
+        if (moveDirectionAngle < 5 && moveDirectionAngle > 1)
+        {
+            DebugPanel.Log("Correction ", "Left");
+            transform.Rotate(Vector3.up * -Time.deltaTime, Space.World);
+        }
+        if (moveDirectionAngle > -5 && moveDirectionAngle < 1)
+        {
+            DebugPanel.Log("Correction ", "Right");
+            transform.Rotate(Vector3.up * Time.deltaTime, Space.World);
+        }
+
         //Setup movement speed and direction
         anim.SetFloat(moveSpeedHash, moveSpeed);
         anim.SetFloat(moveDirectionHash, moveDirectionAngle);
