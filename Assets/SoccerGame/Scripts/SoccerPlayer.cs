@@ -39,6 +39,8 @@ public class SoccerPlayer : MonoBehaviour {
     private bool controllingBall;
     private Vector3 dribblingDirection;
     public float moveDirectionDeviation = 5F; //Move direction acceptable deviation
+    public float temporarySlowDown = 0F;
+    public float accelerationLerp = 0.1F; 
 
     // Use this for initialization
     void Start () {
@@ -86,6 +88,17 @@ public class SoccerPlayer : MonoBehaviour {
             }
         }
 
+        //Slowdown for turn
+        if (Math.Abs(moveDirectionAngle) > 45)
+        {
+            if (temporarySlowDown == 0) temporarySlowDown = moveSpeed;
+            if(moveSpeed > 0.1F) moveSpeed = Mathf.Lerp(moveSpeed, 0.1F, accelerationLerp);
+        }
+        else if (temporarySlowDown > 0) {
+            if (moveSpeed < temporarySlowDown) moveSpeed = Mathf.Lerp(moveSpeed, temporarySlowDown, accelerationLerp);
+            else temporarySlowDown = 0;
+        }
+
         //Setup movement speed and direction
         anim.SetFloat(moveSpeedHash, moveSpeed);
         anim.SetFloat(moveDirectionHash, moveDirectionAngle);
@@ -112,17 +125,18 @@ public class SoccerPlayer : MonoBehaviour {
         targetDirectionAngle = Vector3.SignedAngle(targetDirection, transform.forward, Vector3.up);
         targetDistance = Vector3.Distance(myTarget.transform.position, transform.position);
 
-        //Check if should turn left
+        //Check if should turn left in place
         if (targetDirectionAngle > headingAngle / 2 + visionAngle && !anim.GetBool(turnLeftInPlaceHash)) {
             anim.SetBool(turnLeftInPlaceHash, true);
         }
-        //Check if should turn right
+        //Check if should turn right place
         if (targetDirectionAngle < -headingAngle / 2 - visionAngle && !anim.GetBool(turnRightInPlaceHash)) {
             anim.SetBool(turnRightInPlaceHash, true);
         }
 
         DebugPanel.Log("Target Distance ", targetDistance);
         DebugPanel.Log("Target Direction Angle ", targetDirectionAngle);
+        DebugPanel.Log("MoveSpeed", moveSpeed);
 	}
 
     void takeBallControl(IMessage rMessage) {

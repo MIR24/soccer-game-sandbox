@@ -1096,6 +1096,8 @@ MonoBehaviour:
   targetDirectionAngle: 0
   targetDistance: 0
   moveDirectionDeviation: 5
+  temporarySlowDown: 0
+  accelerationLerp: 0.1
 --- !u!95 &924044388
 Animator:
   serializedVersion: 3
@@ -1790,7 +1792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd186be454f3724da7d6f1dcd97b8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScale: 1.5
+  timeScale: 0.1
   ball: {fileID: 0}
   playableChar: {fileID: 924044385}
   spectateMediane: {fileID: 790961394}
