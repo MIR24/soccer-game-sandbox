@@ -77,12 +77,12 @@ public class SoccerPlayer : MonoBehaviour {
             if (moveDirectionAngle > 1)
             {
                 DebugPanel.Log("Last Correction ", "Left");
-                transform.Rotate(Vector3.up * -Time.deltaTime * Mathf.LerpAngle(0, moveDirectionAngle, 0.5F), Space.World);
+                transform.Rotate(Vector3.up * -Time.deltaTime * Mathf.Lerp(0, moveDirectionAngle, 0.5F), Space.World);
             }
             if (moveDirectionAngle < -1)
             {
                 DebugPanel.Log("Last Correction ", "Right");
-                transform.Rotate(Vector3.up * Time.deltaTime * Mathf.LerpAngle(0, moveDirectionAngle, 0.5F), Space.World);
+                transform.Rotate(Vector3.up * -Time.deltaTime * Mathf.Lerp(0, moveDirectionAngle, 0.5F), Space.World);
             }
         }
 
