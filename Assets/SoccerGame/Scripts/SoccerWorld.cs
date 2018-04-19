@@ -8,6 +8,8 @@ public class SoccerWorld : MonoBehaviour
     public float timeScale = 1f;
     public GameObject ball;
     public GameObject playableChar;
+    public GameObject SoccerGoalHome;
+    public GameObject SoccerGoalGuest;
 
     //Midpoint beetwen ball and controllable char to point camera
     public GameObject spectateMediane;

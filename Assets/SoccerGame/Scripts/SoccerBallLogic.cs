@@ -77,7 +77,7 @@ public class SoccerBallLogic : MonoBehaviour {
 
         if (!isUnderControl && !isJustReleased && justReleasedTimeout == 0 && other.gameObject.tag == "Ball Controller")
         {
-            if (setControllable(true, other.gameObject))
+            if (SetControllable(true, other.gameObject))
                 MessageDispatcher.SendMessage("ball_controlled_by", other.transform.root.name, 0);
         }
     }
@@ -99,7 +99,7 @@ public class SoccerBallLogic : MonoBehaviour {
 
     }
 
-    public bool setControllable(bool controllable, GameObject newBallController)
+    public bool SetControllable(bool controllable, GameObject newBallController)
     {
 
         if (controllable)
