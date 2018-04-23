@@ -1044,14 +1044,14 @@ Transform:
   m_PrefabParentObject: {fileID: 461876, guid: ad8864c969682e34ebd3af2157d6b6f1, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1068026823}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.163, z: 0}
+  m_LocalRotation: {x: -0.69352335, y: -0.72040737, z: -0.0043125916, w: -0.004479595}
+  m_LocalPosition: {x: -0.000000025309717, y: 0.163, z: -3.147705e-10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1152727685}
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180.713, z: 87.82101}
 --- !u!54 &1068026828
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1220,7 +1220,7 @@ GameObject:
   - component: {fileID: 1152727685}
   - component: {fileID: 1152727686}
   m_Layer: 0
-  m_Name: Bip002 R Foot Target
+  m_Name: Bip002 R Foot Inner Side Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1255,8 +1255,8 @@ MonoBehaviour:
   effectorType: 8
   multipliers: []
   interactionSpeedMlp: 1
-  pivot: {fileID: 0}
-  twistAxis: {x: 0, y: 1, z: 0}
+  pivot: {fileID: 1068026827}
+  twistAxis: {x: 1, y: 1, z: 0}
   twistWeight: 1
   swingWeight: 0
   rotateOnce: 1
