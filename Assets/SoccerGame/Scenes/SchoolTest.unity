@@ -680,7 +680,6 @@ GameObject:
   m_Component:
   - component: {fileID: 801369164}
   - component: {fileID: 801369165}
-  - component: {fileID: 801369166}
   - component: {fileID: 801369167}
   m_Layer: 0
   m_Name: Bip002 R Foot Inside Target
@@ -696,14 +695,14 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 801369163}
-  m_LocalRotation: {x: -0.028545495, y: -0.03839081, z: -0.8718557, w: -0.48742074}
-  m_LocalPosition: {x: 0.22501722, y: 0.15224391, z: -0.00036504865}
+  m_LocalRotation: {x: -0.6159689, y: -0.38885397, z: 0.5766402, w: 0.36994734}
+  m_LocalPosition: {x: -0.0040000086, y: 0.035000004, z: 0.2530006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 785289532}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 5.0610003, y: 0.246, z: 19.890001}
+  m_Father: {fileID: 885868931}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.418, y: -93.512, z: 115.079}
 --- !u!114 &801369165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,24 +722,6 @@ MonoBehaviour:
   twistWeight: 1
   swingWeight: 0
   rotateOnce: 0
---- !u!114 &801369166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 801369163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1f6eef4ae0aef14c8d70cea6d33b591, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerDirection: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  soccerWorld: {fileID: 0}
-  soccerPlayer: {fileID: 0}
-  soccerBall: {fileID: 0}
-  distanceCoef: 1
-  positionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &801369167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,6 +925,50 @@ Transform:
   m_PrefabParentObject: {fileID: 4397464906916254, guid: 06e900b2af1fe8d4486f9563388a8189,
     type: 2}
   m_PrefabInternal: {fileID: 1912278647}
+--- !u!1 &885868929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 885868931}
+  - component: {fileID: 885868930}
+  m_Layer: 0
+  m_Name: R Foot Inside Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &885868930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 885868929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f6eef4ae0aef14c8d70cea6d33b591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soccerPlayer: {fileID: 0}
+  soccerBall: {fileID: 0}
+  distanceToBall: 0.1
+--- !u!4 &885868931
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 885868929}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 801369164}
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &916606451
 GameObject:
   m_ObjectHideFlags: 0
