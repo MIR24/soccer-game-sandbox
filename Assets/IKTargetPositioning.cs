@@ -10,7 +10,7 @@ public class IKTargetPositioning : MonoBehaviour {
     public GameObject soccerPlayer;
     public GameObject soccerBall;
 
-    public Vector3 positionOffset;
+    public float distanceToBall = 0.1F;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +25,6 @@ public class IKTargetPositioning : MonoBehaviour {
         Debug.DrawRay(gameObject.transform.position, playerDirection, Color.yellow);
         Debug.DrawRay(gameObject.transform.position, ballDirection, Color.yellow);
 
-        transform.position = soccerPlayer.transform.position + (soccerBall.transform.position - soccerPlayer.transform.position) + positionOffset;
+        transform.position = soccerBall.transform.position + (soccerPlayer.transform.position - soccerBall.transform.position).normalized * distanceToBall;
 	}
 }
