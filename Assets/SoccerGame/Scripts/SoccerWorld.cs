@@ -8,6 +8,7 @@ public class SoccerWorld : MonoBehaviour
     public float timeScale = 1f;
     public GameObject ball;
     public GameObject playableChar;
+    public bool gizmoSpectateMediane;
 
     //Midpoint beetwen ball and controllable char to point camera
     public GameObject spectateMediane;
@@ -27,8 +28,11 @@ public class SoccerWorld : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(spectateMediane.transform.position, 0.1F);
+        if (gizmoSpectateMediane)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(spectateMediane.transform.position, 0.1F);
+        }
     }
 
 }
