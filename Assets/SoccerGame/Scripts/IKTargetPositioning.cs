@@ -11,7 +11,7 @@ public class IKTargetPositioning : MonoBehaviour {
     public GameObject soccerPlayer;
     public GameObject soccerBall;
 
-    public float distanceToBall = 0.1F;
+    public Vector3 lookAtOffset;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +22,7 @@ public class IKTargetPositioning : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.position = soccerBall.transform.position;
-        transform.LookAt(new Vector3(soccerPlayer.transform.position.x, transform.position.y, soccerPlayer.transform.position.z));
+        transform.LookAt(new Vector3(soccerPlayer.transform.position.x + lookAtOffset.x, transform.position.y+lookAtOffset.y, soccerPlayer.transform.position.z+lookAtOffset.z));
 
     }
 }
