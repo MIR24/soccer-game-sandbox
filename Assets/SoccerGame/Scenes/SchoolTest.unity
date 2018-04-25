@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 801369165}
   - component: {fileID: 801369167}
   m_Layer: 0
-  m_Name: Bip002 R Foot Inside Target
+  m_Name: Bip002 R Foot Outside Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,14 +695,14 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 801369163}
-  m_LocalRotation: {x: -0.6159689, y: -0.38885397, z: 0.5766402, w: 0.36994734}
-  m_LocalPosition: {x: -0.0040000086, y: 0.035000004, z: 0.2530006}
+  m_LocalRotation: {x: -0.62548524, y: -0.33675933, z: 0.5982084, w: 0.3708207}
+  m_LocalPosition: {x: 0.019, y: 0.062, z: 0.115}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 785289532}
   m_Father: {fileID: 885868931}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.418, y: -93.512, z: 115.079}
+  m_LocalEulerAnglesHint: {x: -3.496, y: -90.533005, z: 119.94}
 --- !u!114 &801369165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,13 +762,38 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+  - type: 1
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
   multipliers:
   - curve: 0
     multiplier: 1
     result: 7
   events:
   - time: 0.5
-    pause: 1
+    pause: 0
     pickUp: 0
     animations: []
     messages: []
@@ -935,7 +960,7 @@ GameObject:
   - component: {fileID: 885868931}
   - component: {fileID: 885868930}
   m_Layer: 0
-  m_Name: R Foot Inside Target
+  m_Name: R Foot Outside Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -954,7 +979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soccerPlayer: {fileID: 0}
   soccerBall: {fileID: 0}
-  distanceToBall: 0.1
+  lookAtOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &885868931
 Transform:
   m_ObjectHideFlags: 0
@@ -1239,11 +1264,11 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1068026823}
   serializedVersion: 2
-  m_Mass: 3
+  m_Mass: 2
   m_Drag: 0.75
   m_AngularDrag: 0.75
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
@@ -1726,7 +1751,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 40
-  field of view: 57.7
+  field of view: 51
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -1814,9 +1839,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd186be454f3724da7d6f1dcd97b8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScale: 1
+  timeScale: 0.2
   ball: {fileID: 0}
   playableChar: {fileID: 1912278648}
+  gizmoSpectateMediane: 0
   spectateMediane: {fileID: 790961394}
 --- !u!4 &1599284205
 Transform:
@@ -1866,7 +1892,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 790961395}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 57.7
+    FieldOfView: 51
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 40
@@ -2246,6 +2272,26 @@ Prefab:
       propertyPath: m_ConnectedAnchor.z
       value: 0.00000005741041
       objectReference: {fileID: 0}
+    - target: {fileID: 114891688456888648, guid: 06e900b2af1fe8d4486f9563388a8189,
+        type: 2}
+      propertyPath: interactionSystem
+      value: 
+      objectReference: {fileID: 1912278733}
+    - target: {fileID: 114891688456888648, guid: 06e900b2af1fe8d4486f9563388a8189,
+        type: 2}
+      propertyPath: rightFootOutTarget
+      value: 
+      objectReference: {fileID: 801369167}
+    - target: {fileID: 54719393022653036, guid: 06e900b2af1fe8d4486f9563388a8189,
+        type: 2}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114891688456888648, guid: 06e900b2af1fe8d4486f9563388a8189,
+        type: 2}
+      propertyPath: accelerationLerp
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06e900b2af1fe8d4486f9563388a8189, type: 2}
   m_IsPrefabParent: 0
@@ -2365,7 +2411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: 
   fadeInTime: 0.3
-  speed: 1
+  speed: 1.5
   resetToDefaultsSpeed: 1
   characterCollider: {fileID: 0}
   FPSCamera: {fileID: 0}

@@ -6,7 +6,12 @@ using UnityEditor;
 using com.ootii.Messages;
 using RootMotion.FinalIK;
 
+[RequireComponent(typeof(InteractionSystem))]
 public class SoccerPlayer : MonoBehaviour {
+    //Interactions
+    public InteractionSystem interactionSystem;
+    public InteractionObject rightFootOutTarget;
+    public float rightFootInteractionMaxDistance = 0.5F;
 
     //Components cached
     public GameObject myTarget;
@@ -40,7 +45,12 @@ public class SoccerPlayer : MonoBehaviour {
     private Vector3 dribblingDirection;
     public float moveDirectionDeviation = 5F; //Move direction acceptable deviation
     public float temporarySlowDown = 0F;
-    public float accelerationLerp = 0.1F; 
+    public float accelerationLerp = 0.1F;
+    public float accelerationLinear = 0.1F;
+
+    void Awake() {
+        interactionSystem = GetComponent<InteractionSystem>();
+    }
 
     // Use this for initialization
     void Start () {
@@ -70,6 +80,16 @@ public class SoccerPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (interactionSystem != null && !interactionSystem.IsInInteraction(FullBodyBipedEffector.RightFoot)) {
+            //interactionSystem.StartInteraction(FullBodyBipedEffector.RightFoot, rightFootOutTarget, true);
+        }
+
+        float rightFootInteractionTargetDistance = Vector3.Distance(gameObject.transform.position, rightFootOutTarget.transform.root.position);
+        if (interactionSystem.IsInInteraction(FullBodyBipedEffector.RightFoot) &&  rightFootInteractionTargetDistance > 1F){
+            interactionSystem. StopInteraction(FullBodyBipedEffector.RightFoot);
+        }
+        
         //Setup move direction (move direction and target direction are not the same, but sometime this happens)
         moveDirectionAngle = targetDirectionAngle;
 
@@ -95,12 +115,17 @@ public class SoccerPlayer : MonoBehaviour {
             if(moveSpeed > 0.1F) moveSpeed = Mathf.Lerp(moveSpeed, 0.1F, accelerationLerp);
         }
         else if (temporarySlowDown > 0) {
-            if (moveSpeed < temporarySlowDown) moveSpeed = Mathf.Lerp(moveSpeed, temporarySlowDown, accelerationLerp);
+            if (moveSpeed < temporarySlowDown) moveSpeed+= accelerationLinear;
             else temporarySlowDown = 0;
         }
 
+        //Adjust move speed to playing animation
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("180_Turn_W_ Briefcase_Mixamo_left") || anim.GetCurrentAnimatorStateInfo(0).IsName("180_Turn_W_ Briefcase_Mixamo_right")){
+            moveSpeed = 0.1F;
+        }
+
         //Setup movement speed and direction
-        anim.SetFloat(moveSpeedHash, moveSpeed);
+            anim.SetFloat(moveSpeedHash, moveSpeed);
         anim.SetFloat(moveDirectionHash, moveDirectionAngle);
         anim.SetFloat(targetDistanceHash, targetDistance);
         
@@ -137,7 +162,9 @@ public class SoccerPlayer : MonoBehaviour {
         DebugPanel.Log("Target Distance ", targetDistance);
         DebugPanel.Log("Target Direction Angle ", targetDirectionAngle);
         DebugPanel.Log("MoveSpeed", moveSpeed);
-	}
+        DebugPanel.Log("Interrupting right foot interaction, distance ", rightFootInteractionTargetDistance);
+
+    }
 
     void takeBallControl(IMessage rMessage) {
         dribblingDirection = Vector3.Normalize(world.ball.transform.position - transform.position);
