@@ -11,7 +11,10 @@ public class SoccerPlayer : MonoBehaviour {
     //Interactions
     public InteractionSystem interactionSystem;
     public InteractionObject rightFootOutTarget;
-    public float rightFootInteractionMaxDistance = 0.5F;
+    public float footInteractionMaxDistance = 1F;
+    public float footInteractionMinDistance = 0.5F;
+    public GameObject rightFoot;
+    public GameObject leftFoot;
 
     //Components cached
     public GameObject myTarget;
@@ -47,6 +50,8 @@ public class SoccerPlayer : MonoBehaviour {
     public float temporarySlowDown = 0F;
     public float accelerationLerp = 0.1F;
     public float accelerationLinear = 0.1F;
+    public bool enableMovementCorrection = true;
+    public Vector3 targetOffset;
 
     void Awake() {
         interactionSystem = GetComponent<InteractionSystem>();
@@ -57,6 +62,8 @@ public class SoccerPlayer : MonoBehaviour {
         //Cache Components and Objects
         anim = GetComponent<Animator>();
         world = GameObject.FindGameObjectWithTag("World").GetComponent<SoccerWorld>();
+        rightFoot = GameObject.FindGameObjectWithTag("RightFoot");
+        leftFoot = GameObject.FindGameObjectWithTag("LeftFoot");
 
         //Cache Animator Parameters
         moveSpeedHash = Animator.StringToHash("Speed");
@@ -81,20 +88,67 @@ public class SoccerPlayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (interactionSystem != null && !interactionSystem.IsInInteraction(FullBodyBipedEffector.RightFoot)) {
-            //interactionSystem.StartInteraction(FullBodyBipedEffector.RightFoot, rightFootOutTarget, true);
-        }
+        //Start drbbling interaction
+        if (interactionSystem != null)
+        {
+            float rightFootInteractionTargetDistance = Vector3.Distance(rightFoot.transform.position, rightFootOutTarget.transform.root.position);
+            float leftFootInteractionTargetDistance = Vector3.Distance(leftFoot.transform.position, rightFootOutTarget.transform.root.position);
+            DebugPanel.Log("Right foot interaction distance ", rightFootInteractionTargetDistance);
+            DebugPanel.Log("Left foot interaction distance ", leftFootInteractionTargetDistance);
 
-        float rightFootInteractionTargetDistance = Vector3.Distance(gameObject.transform.position, rightFootOutTarget.transform.root.position);
-        if (interactionSystem.IsInInteraction(FullBodyBipedEffector.RightFoot) &&  rightFootInteractionTargetDistance > 1F){
-            interactionSystem. StopInteraction(FullBodyBipedEffector.RightFoot);
+            if (!interactionSystem.IsInInteraction(FullBodyBipedEffector.RightFoot) && !interactionSystem.IsInInteraction(FullBodyBipedEffector.LeftFoot))
+            {
+                if (rightFootInteractionTargetDistance > leftFootInteractionTargetDistance)
+                {
+                    if (rightFootInteractionTargetDistance > footInteractionMinDistance && rightFootInteractionTargetDistance < footInteractionMaxDistance)
+                    {
+                        if (!interactionSystem.IsInInteraction(FullBodyBipedEffector.RightFoot))
+                        {
+                            //interactionSystem.StartInteraction(FullBodyBipedEffector.RightFoot, rightFootOutTarget, true);
+                        }
+                        else
+                        {
+                            DebugPanel.Log("Interaction system ", "Awaiting: too far for right foot");
+                        }
+                    }
+                }
+                else
+                {
+                    if (rightFootInteractionTargetDistance > footInteractionMinDistance && rightFootInteractionTargetDistance < footInteractionMaxDistance)
+                    {
+                        if (!interactionSystem.IsInInteraction(FullBodyBipedEffector.LeftFoot))
+                        {
+                            //interactionSystem.StartInteraction(FullBodyBipedEffector.LeftFoot, rightFootOutTarget, true);
+                        }
+                        else
+                        {
+                            DebugPanel.Log("Interaction system ", "Awaiting: too far for left foot");
+                        }
+                    }
+                }
+            }
+
+            //Stop dribbling interaction if ball is moved too far already
+            if (interactionSystem.IsInInteraction(FullBodyBipedEffector.RightFoot) && rightFootInteractionTargetDistance > footInteractionMaxDistance)
+            {
+                //interactionSystem.StopInteraction(FullBodyBipedEffector.RightFoot);
+                DebugPanel.Log("Interaction system ", "Interrupt right foot because of distance");
+            }
+            if (interactionSystem.IsInInteraction(FullBodyBipedEffector.LeftFoot) && leftFootInteractionTargetDistance > footInteractionMaxDistance)
+            {
+                //interactionSystem.StopInteraction(FullBodyBipedEffector.LeftFoot);
+                DebugPanel.Log("Interaction system ", "Interrupt left foot because of distance");
+            }
+        }
+        else {
+            DebugPanel.Log("Interaction system ", "not assigned");
         }
         
         //Setup move direction (move direction and target direction are not the same, but sometime this happens)
         moveDirectionAngle = targetDirectionAngle;
 
         //Adjust move direction
-        if (moveSpeed > 0)
+        if (moveSpeed > 0 && enableMovementCorrection)
         {
             if (moveDirectionAngle > 1)
             {
@@ -106,6 +160,9 @@ public class SoccerPlayer : MonoBehaviour {
                 DebugPanel.Log("Last Correction ", "Right");
                 transform.Rotate(Vector3.up * -Time.deltaTime * Mathf.Lerp(0, moveDirectionAngle, 0.5F), Space.World);
             }
+        }
+        else {
+                DebugPanel.Log("Last Correction ", "Not moving or correction disabled");
         }
 
         //Slowdown for turn
@@ -125,7 +182,7 @@ public class SoccerPlayer : MonoBehaviour {
         }
 
         //Setup movement speed and direction
-            anim.SetFloat(moveSpeedHash, moveSpeed);
+        anim.SetFloat(moveSpeedHash, moveSpeed);
         anim.SetFloat(moveDirectionHash, moveDirectionAngle);
         anim.SetFloat(targetDistanceHash, targetDistance);
         
@@ -146,9 +203,10 @@ public class SoccerPlayer : MonoBehaviour {
         if (!abruptStop && anim.GetBool(abruptStopHash)) anim.SetBool(abruptStopHash, false);
 
         //Calculate target heading angle and distance
-        targetDirection = myTarget.transform.position - transform.position;
+        targetDirection = myTarget.transform.position + targetOffset - transform.position;
         targetDirectionAngle = Vector3.SignedAngle(targetDirection, transform.forward, Vector3.up);
         targetDistance = Vector3.Distance(myTarget.transform.position, transform.position);
+        Debug.DrawLine(transform.position, myTarget.transform.position + targetOffset, Color.yellow);
 
         //Check if should turn left in place
         if (targetDirectionAngle > headingAngle / 2 + visionAngle && !anim.GetBool(turnLeftInPlaceHash)) {
@@ -162,7 +220,6 @@ public class SoccerPlayer : MonoBehaviour {
         DebugPanel.Log("Target Distance ", targetDistance);
         DebugPanel.Log("Target Direction Angle ", targetDirectionAngle);
         DebugPanel.Log("MoveSpeed", moveSpeed);
-        DebugPanel.Log("Interrupting right foot interaction, distance ", rightFootInteractionTargetDistance);
 
     }
 
