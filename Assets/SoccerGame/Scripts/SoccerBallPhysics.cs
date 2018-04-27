@@ -5,6 +5,10 @@ using UnityEngine;
 public class SoccerBallPhysics : MonoBehaviour {
 
     private Rigidbody ballPhysics;
+    public float dribbleForceMultiplier = 1F;
+    public Vector3 lstAccelerationPoint;
+    public Vector3 lstAccelerationDirection;
+    public Vector3 testForce;
 	// Use this for initialization
 	void Start () {
         ballPhysics = GetComponent<Rigidbody>();
@@ -12,17 +16,25 @@ public class SoccerBallPhysics : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        Debug.DrawLine(lstAccelerationPoint, lstAccelerationDirection, Color.red);
 	}
+
+    void OnGUI()
+    {
+         if (GUI.Button(new Rect(10, 70, 50, 30), "Click"))
+            ballPhysics.AddForce(testForce, ForceMode.VelocityChange);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         DebugPanel.Log("Ball collided with ", collision.gameObject.tag);
         if (collision.gameObject.tag == "RightFoot" || collision.gameObject.tag == "LeftFoot") {
-            ballPhysics.velocity = Vector3.zero;
-            ballPhysics.angularVelocity = Vector3.zero;
-
-            ballPhysics.AddForce((transform.position - collision.transform.position).normalized*10, ForceMode.Force);
+            lstAccelerationPoint = transform.position;
+            Vector3 accelerationVector = (lstAccelerationPoint - collision.transform.root.gameObject.transform.position).normalized;
+            accelerationVector = new Vector3(accelerationVector.x, transform.position.y, accelerationVector.z);
+            lstAccelerationDirection = accelerationVector * collision.transform.root.gameObject.GetComponent<SoccerPlayer>().moveSpeed * dribbleForceMultiplier;
+            ballPhysics.AddForce(lstAccelerationDirection, ForceMode.VelocityChange);
+            Debug.Log("Pushing ball forwards");
         }
     }
 
