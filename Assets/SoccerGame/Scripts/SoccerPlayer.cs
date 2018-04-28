@@ -203,10 +203,11 @@ public class SoccerPlayer : MonoBehaviour {
         if (!abruptStop && anim.GetBool(abruptStopHash)) anim.SetBool(abruptStopHash, false);
 
         //Calculate target heading angle and distance
-        targetDirection = myTarget.transform.position + targetOffset - transform.position;
+        Vector3 targetPositionWithOffset = myTarget.transform.position + targetOffset;
+        targetDirection = targetPositionWithOffset - transform.position;
         targetDirectionAngle = Vector3.SignedAngle(targetDirection, transform.forward, Vector3.up);
         targetDistance = Vector3.Distance(myTarget.transform.position, transform.position);
-        Debug.DrawLine(transform.position, myTarget.transform.position + targetOffset, Color.yellow);
+        Debug.DrawLine(transform.position, targetPositionWithOffset, Color.yellow);
 
         //Check if should turn left in place
         if (targetDirectionAngle > headingAngle / 2 + visionAngle && !anim.GetBool(turnLeftInPlaceHash)) {
