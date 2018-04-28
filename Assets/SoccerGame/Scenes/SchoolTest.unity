@@ -323,6 +323,7 @@ GameObject:
   - component: {fileID: 248570739}
   - component: {fileID: 248570738}
   - component: {fileID: 248570737}
+  - component: {fileID: 248570742}
   m_Layer: 0
   m_Name: prop_football_a
   m_TagString: Ball
@@ -407,12 +408,29 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 248570736}
   m_LocalRotation: {x: -0.00000027423513, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.11480009, z: -0.00000007665708}
+  m_LocalPosition: {x: 9.06, y: 0.11, z: -2.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &248570742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 248570736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae46bbfde0125c4bbdd9b0f2f5b525b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dribbleForceMultiplier: 1.25
+  lstAccelerationPoint: {x: 0, y: 0, z: 0}
+  lstAccelerationDirection: {x: 0, y: 0, z: 0}
+  goalDirection: {x: 0, y: 0, z: 0}
+  testForce: {x: 0, y: 0, z: 0}
+  ballTarget: {fileID: 405208182}
 --- !u!1 &264313823
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +527,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &405208182 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011930211876, guid: f923dde2c234788459cc4692bef75f56,
+    type: 2}
+  m_PrefabInternal: {fileID: 1975413938}
 --- !u!1 &440362492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,7 +1668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd186be454f3724da7d6f1dcd97b8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScale: 0.2
+  timeScale: 0.03
   ball: {fileID: 0}
   playableChar: {fileID: 1912278648}
   gizmoSpectateMediane: 0
@@ -2024,15 +2047,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4447728076208256, guid: 06e900b2af1fe8d4486f9563388a8189, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 9.56
       objectReference: {fileID: 0}
     - target: {fileID: 4447728076208256, guid: 06e900b2af1fe8d4486f9563388a8189, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.0048000887
       objectReference: {fileID: 0}
     - target: {fileID: 4447728076208256, guid: 06e900b2af1fe8d4486f9563388a8189, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.71
       objectReference: {fileID: 0}
     - target: {fileID: 4447728076208256, guid: 06e900b2af1fe8d4486f9563388a8189, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2152,7 +2175,7 @@ Prefab:
     - target: {fileID: 114891688456888648, guid: 06e900b2af1fe8d4486f9563388a8189,
         type: 2}
       propertyPath: moveSpeed
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 144076347382744642, guid: 06e900b2af1fe8d4486f9563388a8189,
         type: 2}
@@ -2190,7 +2213,7 @@ Prefab:
     - target: {fileID: 95034758331991588, guid: 06e900b2af1fe8d4486f9563388a8189,
         type: 2}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 136119669874277846, guid: 06e900b2af1fe8d4486f9563388a8189,
         type: 2}
